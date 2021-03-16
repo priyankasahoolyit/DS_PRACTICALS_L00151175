@@ -37,3 +37,30 @@ columns_names <- c("Date",
 colnames(managers_data) <- columns_names
 managers_data
 
+# Recode incorrect 'age' to NA
+managers_data$Age[managers_data$Age == 99] <- NA
+managers_data
+
+# 2 options to create a new variable
+# 1- create a new vectorand store the logical check in it
+# 2 - create the new var when doing the logical check
+
+managers_data$age_cat[managers_data$Age >= 45] <- "Elder"
+managers_data$age_cat[managers_data$Age >= 26 & managers_data$Age <= 44 ] <- "Middle Aged"
+managers_data$age_cat[managers_data$Age <= 25] <- "Young"
+managers_data$age_cat[is.na(managers_data$Age)] <- "Elder"
+managers_data
+
+# Recode age_cat so that it is ordinal and factored
+# with the order young , middle aged, elder
+Age_cat <- factor(managers_data$age_cat, order = TRUE, levels = c("Young", "Middle Aged", "Elder" ))
+Age_cat
+
+#replace manager_data, age_cat variable with 
+# the factored variable
+
+managers_data$age_cat <- Age_cat
+managers_data
+
+# Look at the structure of  the dataframe
+str(managers_data)
